@@ -10,7 +10,7 @@ async function printPdf(req: NextApiRequest, res: NextApiResponse) {
   const options = {
     args: chrome.args,
     executablePath: await chrome.executablePath,
-    headless: true,
+    headless: chrome.headless,
   };
   const browser = await puppeteer.launch(options);
   const page = await browser.newPage();
@@ -33,7 +33,7 @@ async function printPdf(req: NextApiRequest, res: NextApiResponse) {
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<Data>
+  res: NextApiResponse<Buffer>
 ) {
   const pdf = await printPdf(req, res);
 
