@@ -2,6 +2,7 @@ import type {NextApiRequest, NextApiResponse} from "next";
 import puppeteer from "puppeteer";
 import chrome from "chrome-aws-lambda";
 import {Stream} from "stream";
+import {Buffer} from "buffer";
 
 type Data = {
     pdf: string;
@@ -36,7 +37,7 @@ async function printPdf(req: NextApiRequest, res: NextApiResponse) {
 
     // pdfStream.pipe(writeStream);
 
-    return await page.createPDFStream({
+    return await page.pdf({
         format: "a4",
         margin: {top: "0.5cm", bottom: "0.5cm", left: "1cm", right: "1cm"},
         landscape: true,
@@ -47,7 +48,7 @@ async function printPdf(req: NextApiRequest, res: NextApiResponse) {
 
 export default async function handler(
     req: NextApiRequest,
-    res: NextApiResponse<Stream>
+    res: NextApiResponse<Buffer>
 ) {
 
     const pdf = await printPdf(req, res);
@@ -55,7 +56,7 @@ export default async function handler(
     res.setHeader("Content-Type", "application/pdf");
     res.setHeader("Access-Control-Allow-Origin", "*");
     res.setHeader('Content-Disposition', 'attachment; filename=rapport_etude.pdf');
-    pdf.pipe(res)
+    res.send(pdf)
 
     // printPdf(req, res).on('end', async () => {
     //   await browser.close();
