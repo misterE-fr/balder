@@ -6,11 +6,14 @@ type Data = {
     pdf: string;
 };
 
+
 export const config = {
     api: {
         responseLimit: false,
-        bodyParser: false,
-    },
+        bodyParser: {
+            sizeLimit: '15mb' // Set desired value here
+        }
+    }
 }
 
 async function printQuickCheck(req: NextApiRequest, res: NextApiResponse) {
