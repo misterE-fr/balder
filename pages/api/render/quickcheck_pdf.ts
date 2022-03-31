@@ -1,12 +1,10 @@
 import type {NextApiRequest, NextApiResponse} from "next";
 import puppeteer from "puppeteer";
 import chrome from "chrome-aws-lambda";
-import {Stream} from "stream";
 
 type Data = {
     pdf: string;
 };
-
 
 export const config = {
     api: {
@@ -15,8 +13,7 @@ export const config = {
     },
 }
 
-
-async function printPdf(req: NextApiRequest, res: NextApiResponse) {
+async function printQuickCheck(req: NextApiRequest, res: NextApiResponse) {
     const options = {
         args: chrome.args,
         executablePath: await chrome.executablePath,
@@ -24,39 +21,33 @@ async function printPdf(req: NextApiRequest, res: NextApiResponse) {
     };
     const browser = await puppeteer.launch(options);
     const page = await browser.newPage();
+    console.log(typeof req.query.url);
+
     const url: string = `${req.query.url}`;
 
     await page.goto(url, {
-        waitUntil: "networkidle2", timeout: 0
+        waitUntil: "networkidle2",
     });
-
-    // const writeStream = fs.createWriteStream('rapport_etude.pdf');
-
-    // pdfStream.pipe(writeStream);
+    // await page.close();
+    // await browser.close();
 
     return await page.createPDFStream({
         format: "a4",
-        margin: {top: "0.5cm", bottom: "0.5cm", left: "1cm", right: "1cm"},
-        landscape: true,
+        margin: {top: "1cm", bottom: "1cm", left: "1cm", right: "1cm"},
+        landscape: false,
         timeout: 0
-    })
+    });
 }
-
 
 export default async function handler(
     req: NextApiRequest,
-    res: NextApiResponse<Stream>
+    res: NextApiResponse<Buffer>,
 ) {
-
-    const pdf = await printPdf(req, res);
+    const pdf = await printQuickCheck(req, res);
 
     res.setHeader("Content-Type", "application/pdf");
     res.setHeader("Access-Control-Allow-Origin", "*");
-    res.setHeader('Content-Disposition', 'attachment; filename=rapport_etude.pdf');
+    res.setHeader('Content-Disposition', 'attachment; filename=quick_check.pdf');
     pdf.pipe(res)
-
-    // printPdf(req, res).on('end', async () => {
-    //   await browser.close();
-    // });
-
 }
+
