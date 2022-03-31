@@ -1,0 +1,13 @@
+{
+  "functions": {
+    "api/render/pdf.ts": {
+      "memory": 3008,
+      "maxDuration": 10
+    },
+    "api/render/quickcheck_pdf.ts": {
+      "memory": 3008,
+      "maxDuration": 10
+    }
+  }
+}
+
