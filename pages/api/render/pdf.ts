@@ -37,7 +37,7 @@ async function printPdf(req: NextApiRequest, res: NextApiResponse) {
 
     // pdfStream.pipe(writeStream);
 
-    return await page.pdf({
+    return await page.createPDFStream({
         format: "a4",
         margin: {top: "0.5cm", bottom: "0.5cm", left: "1cm", right: "1cm"},
         landscape: true,
