@@ -11,9 +11,7 @@ type Data = {
 export const config = {
     api: {
         responseLimit: false,
-        bodyParser: {
-            sizeLimit: '15mb' // Set desired value here
-        }
+        bodyParser: false
     }
 }
 
