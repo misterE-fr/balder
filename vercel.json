@@ -1,7 +1,7 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "functions": {
-    "pages/api/*.ts": {
+    "/pages/api/*.ts": {
       "memory": 3008,
       "maxDuration": 15
     }

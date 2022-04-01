@@ -46,7 +46,6 @@ export default async function handler(
     res: NextApiResponse<Stream>,
 ) {
     const pdf = await printQuickCheck(req, res);
-
     res.setHeader("Content-Type", "application/pdf");
     res.setHeader("Access-Control-Allow-Origin", "*");
     res.setHeader('Content-Disposition', 'attachment; filename=quick_check.pdf');
