@@ -48,7 +48,7 @@ async function printPdf(req: NextApiRequest, res: NextApiResponse) {
 
 export default async function handler(
     req: NextApiRequest,
-    res: NextApiResponse<Buffer>
+    res: NextApiResponse<Stream>
 ) {
 
     const pdf = await printPdf(req, res);
@@ -56,7 +56,7 @@ export default async function handler(
     res.setHeader("Content-Type", "application/pdf");
     res.setHeader("Access-Control-Allow-Origin", "*");
     res.setHeader('Content-Disposition', 'attachment; filename=rapport_etude.pdf');
-    res.send(pdf)
+    pdf.pipe(res)
 
     // printPdf(req, res).on('end', async () => {
     //   await browser.close();

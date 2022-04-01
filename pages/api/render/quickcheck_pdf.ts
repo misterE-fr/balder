@@ -1,6 +1,7 @@
 import type {NextApiRequest, NextApiResponse} from "next";
 import puppeteer from "puppeteer";
 import chrome from "chrome-aws-lambda";
+import {Stream} from "stream";
 
 type Data = {
     pdf: string;
@@ -44,7 +45,7 @@ async function printQuickCheck(req: NextApiRequest, res: NextApiResponse) {
 
 export default async function handler(
     req: NextApiRequest,
-    res: NextApiResponse<Buffer>,
+    res: NextApiResponse<Stream>,
 ) {
     const pdf = await printQuickCheck(req, res);
 
