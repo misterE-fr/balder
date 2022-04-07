@@ -34,7 +34,7 @@ async function printQuickCheck(req: NextApiRequest, res: NextApiResponse) {
 
   return await page.pdf({
     format: "a4",
-    margin: { top: "1cm", bottom: "1cm", left: "1cm", right: "1cm" },
+    margin: { top: "0.5cm", bottom: "0.5cm", left: "1cm", right: "1cm" },
     landscape: false,
     timeout: 0,
   });
