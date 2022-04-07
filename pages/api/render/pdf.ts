@@ -3,6 +3,7 @@ import puppeteer from "puppeteer";
 import chrome from "chrome-aws-lambda";
 import {Stream} from "stream";
 import {Buffer} from "buffer";
+// import {printPdf} from "../../_middleware";
 
 type Data = {
     pdf: string;
