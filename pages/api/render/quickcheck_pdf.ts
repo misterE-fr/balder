@@ -27,10 +27,11 @@ async function printQuickCheck(req: NextApiRequest, res: NextApiResponse) {
   const url: string = `${req.query.url}`;
 
   await page.goto(url, {
-    waitUntil: "networkidle2",
+    waitUntil: "networkidle0",
   });
   // await page.close();
   // await browser.close();
+  await page.waitForFunction(() => !document.querySelector(".loading"));
 
   return await page.pdf({
     format: "a4",
